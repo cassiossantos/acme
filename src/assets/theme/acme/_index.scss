@@ -1,0 +1,137 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$acme-font-family: 'Inter', sans-serif;
+
+$acme-typography: mat.define-typography-config(
+  $font-family: $acme-font-family,
+);
+
+$acme-typography-config: mat.define-typography-config(
+  $display-4: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+  $display-3: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+  $display-2: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+  $display-1: mat.define-typography-level(34px, 40px, 400),
+  $headline: mat.define-typography-level(24px, 32px, 400),
+);
+
+// Paleta personalizada de cores primárias
+$acme-primary-palette: (
+  50: #e3f2fd,
+  100: #badffb,
+  200: #8fcbfa,
+  300: #61b7f7,
+  400: #3ca7f6,
+  500: #0c98f5,
+  600: #078ae7,
+  700: #0078d4,
+  800: #0067c2,
+  // Principal
+  900: #0049a3,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$acme-accent-palette: (
+  50: #f9f9fa,
+  100: #f3f3f4,
+  200: #ebebec,
+  300: #dcdcdd,
+  400: #b9b9ba,
+  500: #99999a,
+  600: #707071,
+  700: #5d5d5e,
+  800: #3e3e3f,
+  900: #1d1d1e,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+$acme-warn-palette: (
+  50: #ffebef,
+  100: #ffcdc5,
+  200: #f0999f,
+  300: #e77179,
+  400: #f24e58,
+  500: #f83a40,
+  600: #e9313e,
+  700: #d72638,
+  800: #ca1e30,
+  900: #bb0d24,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$acme-primary: mat.define-palette($acme-primary-palette, 800);
+$acme-accent: mat.define-palette($acme-accent-palette, 300, 100, 500);
+$acme-warn: mat.define-palette($acme-warn-palette, 500);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$acme-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $acme-primary,
+      accent: $acme-accent,
+      warn: $acme-warn,
+    ),
+    typography: $acme-typography,
+    density: 0,
+  )
+);
+
+@include mat.core-theme($acme-theme);
+@include mat.all-component-themes($acme-theme);
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: $acme-font-family;
+}
+
+.mat-typography {
+  letter-spacing: normal;
+  font: 400 14px / 20px $acme-font-family;
+}
