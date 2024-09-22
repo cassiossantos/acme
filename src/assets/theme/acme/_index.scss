@@ -54,7 +54,7 @@ $acme-primary-palette: (
 );
 
 $acme-accent-palette: (
-  50: #f9f9fa,
+  50: #fafbff,
   100: #f3f3f4,
   200: #ebebec,
   300: #dcdcdd,
@@ -103,7 +103,7 @@ $acme-warn-palette: (
 );
 
 $acme-primary: mat.define-palette($acme-primary-palette, 800);
-$acme-accent: mat.define-palette($acme-accent-palette, 300, 100, 500);
+$acme-accent: mat.define-palette($acme-accent-palette, 50, 100, 500);
 $acme-warn: mat.define-palette($acme-warn-palette, 500);
 
 // Create the theme object. A theme consists of configurations for individual
@@ -128,10 +128,13 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: $acme-font-family;
 }
 
 .mat-typography {
   letter-spacing: normal;
+  font: 400 14px / 20px $acme-font-family;
+}
+
+.mat-title {
   font: 400 14px / 20px $acme-font-family;
 }

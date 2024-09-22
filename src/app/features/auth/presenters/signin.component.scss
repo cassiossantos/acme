@@ -7,21 +7,25 @@
   align-items: center;
   height: 100vh;
   box-sizing: border-box;
-  background-color: $color-tertiary;
+  background-color: $color-foreground;
 }
 
 // Cartão centralizado
-mat-card {
+.mat-card {
   width: 100%;
   height: 100vh;
   padding: 140px 30px 40px;
   box-sizing: border-box;
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.12);
 
   // Responsividade para telas pequenas
   @include respond-to(sm) {
     max-width: 460px;
     height: auto;
     padding: 40px 30px;
+    position: relative;
+    top: -40px;
   }
 
   // Subtítulo do cartão

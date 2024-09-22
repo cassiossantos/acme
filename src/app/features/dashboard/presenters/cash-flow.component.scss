@@ -1,0 +1,75 @@
+@import '../../../../assets/theme/index';
+
+.cash-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding-top: 110px;
+  background-color: $color-bg-light;
+
+  &__analysis {
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+
+    @include respond-to(sm) {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      max-width: $breakpoint-xl;
+    }
+
+    acme-card {
+      flex: 1;
+      width: 100%;
+    }
+  }
+
+  &__data {
+    display: flex;
+    width: 100%;
+    max-width: $breakpoint-xl;
+    box-sizing: border-box;
+    padding: 16px;
+
+    &-actions {
+      display: flex;
+      gap: 10px;
+
+      .mat-icon {
+        color: $color-bg;
+      }
+    }
+
+    .mat-card {
+      width: 100%;
+    }
+
+    .mat-card-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mat-title {
+      font-size: $font-size-large;
+      font-weight: $font-weight-semibold;
+      margin: 0;
+
+      .mat-icon {
+        color: $color-bg;
+      }
+    }
+  }
+
+  @include respond-to(sm) {
+    padding-top: 150px;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+}

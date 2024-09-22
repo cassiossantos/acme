@@ -1,1 +1,28 @@
-<p>cash-flow works!</p>
+<acme-topbar></acme-topbar>
+
+<main class="cash-flow">
+  <section class="cash-flow__analysis">
+    <acme-card></acme-card>
+    <acme-card></acme-card>
+    <acme-card></acme-card>
+  </section>
+
+  <section class="cash-flow__data">
+    <mat-card>
+      <mat-card-title>
+        <span class="mat-title">Gerenciamento</span>
+        <div class="cash-flow__data-actions">
+          <button mat-flat-button color="primary">Adicionar</button>
+          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+      </mat-card-title>
+
+      <mat-card-content>
+        <acme-table></acme-table>
+        <acme-paginator></acme-paginator>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</main>

@@ -1,0 +1,64 @@
+@import '../../../../../assets/theme/index';
+
+.spacer {
+  flex: 1 1 100%;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: $breakpoint-xl;
+  }
+
+  .mat-fab {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2;
+}
+.sub {
+  border-bottom: 1px solid $color-tertiary;
+  background-color: $color-bg-base-light;
+
+  .mat-title {
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    font-size: $font-size-large;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    line-height: 1.5em;
+  }
+}

@@ -1,0 +1,24 @@
+<header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row class="container">
+      <div class="logo">
+        <mat-icon>dashboard2</mat-icon>
+        <span>Acme</span>
+      </div>
+      <div>
+        <button mat-fab [matMenuTriggerFor]="menu">
+          <img src="https://material.angular.io/assets/img/examples/shiba1.jpg" />
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Sair</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-toolbar color="accent" class="sub">
+    <mat-toolbar-row class="container">
+      <div class="mat-title">Fluxo de Caixa</div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header>

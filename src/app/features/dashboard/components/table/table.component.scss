@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.user {
+  display: flex;
+  gap: 10px;
+
+  img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+
+    .info {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
