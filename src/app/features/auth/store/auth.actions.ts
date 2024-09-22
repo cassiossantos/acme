@@ -10,6 +10,6 @@ export const loginSuccess = createAction(
   props<{ user: { email: string } }>(),
 );
 
-export const loginFailure = createAction('[Auth] Login Failure', props<{ error: string }>());
+export const loginFailure = createAction('[Auth] Login Failure', props<{ error: boolean }>());
 
 export const logout = createAction('[Auth] Logout');

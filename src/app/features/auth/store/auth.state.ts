@@ -3,11 +3,11 @@ export interface AuthState {
     email: string | null;
   } | null;
   loading: boolean;
-  error: string | null;
+  error: boolean;
 }
 
 export const initialAuthState: AuthState = {
   user: null,
   loading: false,
-  error: null,
+  error: false,
 };
