@@ -6,7 +6,11 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
-  { path: '', redirectTo: '/auth/signin', pathMatch: 'full' }, // Redireciona para a rota signin
+  {
+    path: '',
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
   { path: '**', redirectTo: '/auth/signin' }, // Redireciona rota desconhecida
 ];
 @NgModule({

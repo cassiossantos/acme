@@ -4,14 +4,13 @@
       <span> Acme, Inc. </span>
     </mat-card-title>
 
-    <mat-card-subtitle> Selecione um conta para acessar </mat-card-subtitle>
+    <mat-card-subtitle> Selecione uma conta para acessar </mat-card-subtitle>
   </mat-card-title-group>
   <mat-card-content>
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Selecione um usuário</mat-label>
+      <mat-label>Conta de acesso</mat-label>
       <mat-select required (selectionChange)="onSelectUser($event.value)">
         <mat-option *ngFor="let user of users" [value]="user">
-          <span>{{ user.name }}</span>
           <span class="email">{{ user.email }}</span>
         </mat-option>
       </mat-select>
