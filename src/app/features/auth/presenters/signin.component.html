@@ -1,41 +1,50 @@
-<mat-card>
-  <mat-card-title-group>
-    <mat-card-title>
-      <span> Acme, Inc. </span>
-    </mat-card-title>
-
-    <mat-card-subtitle> Selecione uma conta para acessar </mat-card-subtitle>
-  </mat-card-title-group>
-  <mat-card-content>
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Conta de acesso</mat-label>
-      <mat-select required (selectionChange)="onSelectUser($event.value)">
-        <mat-option *ngFor="let user of users" [value]="user">
-          <span class="email">{{ user.email }}</span>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div *ngIf="selectedUser" class="selected-user">
-      <img class="avatar" [src]="selectedUser.avatarUrl" alt="Avatar" />
-      <div class="info">
-        <div class="title">{{ selectedUser.name }}</div>
-        <div class="description">{{ selectedUser.email }}</div>
+<form [formGroup]="form" (submit)="onSubmit()">
+  <mat-card>
+    <mat-card-title-group>
+      <mat-card-title>
+        <span> Acme, Inc. </span>
+      </mat-card-title>
+      <mat-card-subtitle> Selecione uma conta para acessar </mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
+      <div *ngIf="selected" class="selected-user">
+        <img class="avatar" [src]="selected.avatar" alt="Avatar" />
+        <div class="info">
+          <div class="title">{{ selected.name }}</div>
+          <div class="description">{{ selected.email }}</div>
+        </div>
       </div>
-    </div>
 
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Senha</mat-label>
-      <input required matInput [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" />
-      <button mat-icon-button matSuffix (click)="toggleShowPassword()">
-        <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-      </button>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Conta de acesso</mat-label>
+        <mat-select
+          formControlName="email"
+          required
+          (selectionChange)="onSelectChange($event.value)"
+        >
+          <mat-option *ngFor="let account of accounts" [value]="account.email">
+            <span class="email">{{ account.email }}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <mat-hint>Para fins de demonstração, a senha é <strong>"bolsa24"</strong></mat-hint>
-    </mat-form-field>
-  </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-actions align="end">
-    <button (click)="login()" mat-flat-button color="primary">Entrar</button>
-  </mat-card-actions>
-</mat-card>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Senha</mat-label>
+        <input
+          formControlName="password"
+          required
+          matInput
+          [type]="showPassword ? 'text' : 'password'"
+        />
+        <button mat-icon-button matSuffix (click)="toggleShowPassword()">
+          <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        <mat-hint>Para fins de demonstração, a senha é <strong>"bolsa24"</strong></mat-hint>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <button type="submit" [disabled]="!form.valid" mat-flat-button color="primary">Entrar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

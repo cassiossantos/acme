@@ -1,46 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-interface User {
-  name: string;
-  email: string;
-  avatarUrl: string;
-}
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Account } from '../models/auth.model';
 @Component({
   selector: 'acme-signin-presenter',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
 })
-export class SigninPresenterComponent implements OnInit {
-  selectedUser: User | null = null;
+export class SigninPresenterComponent {
+  @Input() form!: FormGroup;
+  @Input() accounts!: Account[] | null;
+
+  @Output() submit$ = new EventEmitter();
+
   showPassword = false;
-  password = '';
+  selected!: Account;
 
-  users: User[] = [
-    {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      avatarUrl: 'https://material.angular.io/assets/img/examples/shiba1.jpg',
-    },
-    {
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      avatarUrl: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
-    },
-  ];
-
-  constructor(private router: Router) {}
-
-  ngOnInit(): void {}
-
-  onSelectUser(user: User) {
-    this.selectedUser = user;
-  }
-
-  toggleShowPassword() {
+  public toggleShowPassword() {
     this.showPassword = !this.showPassword;
   }
 
-  login() {
-    this.router.navigate(['/dashboard']);
+  public onSelectChange(event: String) {
+    this.selected = this.accounts?.find((account) => account.email == event) as Account;
+  }
+
+  public onSubmit() {
+    this.submit$.emit();
   }
 }
