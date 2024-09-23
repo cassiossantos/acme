@@ -1,0 +1,24 @@
+@import '../../../../../assets/theme/index';
+
+.card {
+  .mat-card-title {
+    font-size: $font-size-base;
+  }
+
+  .mat-card-content {
+    span {
+      display: inline-block;
+      font-size: $font-size-large;
+      font-weight: $font-weight-semibold;
+      margin: 20px 0;
+
+      &.success {
+        color: $color-success;
+      }
+
+      &.failure {
+        color: $color-error;
+      }
+    }
+  }
+}

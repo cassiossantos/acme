@@ -8,7 +8,8 @@ import { TopbarComponent } from './components/topbar/topbar.component';
 import { TableComponent } from './components/table/table.component';
 import { CardComponent } from './components/card/card.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CurrencyMaskDirective } from '../../shared/currency-mask.directive';
 @NgModule({
   declarations: [
     CashFlowPresenterComponent,
@@ -17,7 +18,8 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
     TableComponent,
     CardComponent,
     PaginatorComponent,
+    CurrencyMaskDirective,
   ],
-  imports: [CommonModule, DashboardRoutingModule, MaterialModule],
+  imports: [CommonModule, DashboardRoutingModule, MaterialModule, FormsModule, ReactiveFormsModule],
 })
 export class DashboardModule {}
