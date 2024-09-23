@@ -6,12 +6,13 @@
         <span>Acme</span>
       </div>
       <div>
-        <button mat-fab [matMenuTriggerFor]="menu">
+        <!-- TODO: <button mat-fab [matMenuTriggerFor]="menu">
           <img src="https://material.angular.io/assets/img/examples/shiba1.jpg" />
-        </button>
-        <mat-menu #menu="matMenu">
+        </button> -->
+        <button (click)="onLogout()" mat-flat-button>Sair</button>
+        <!-- <mat-menu #menu="matMenu">
           <button (click)="onLogout()" mat-menu-item>Sair</button>
-        </mat-menu>
+        </mat-menu> -->
       </div>
     </mat-toolbar-row>
   </mat-toolbar>

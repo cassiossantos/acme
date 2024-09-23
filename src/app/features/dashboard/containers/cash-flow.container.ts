@@ -65,20 +65,11 @@ export class CashFlowContainerComponent implements OnInit {
       type: transaction.type,
       user: transaction.user,
     });
-
-    console.log(transaction, this.transactionId);
   }
   public onCancel() {
     this.isEditMode = false;
     this.transactionId = undefined;
-    this.form.patchValue({
-      description: '',
-      amount: '',
-      category: '',
-      type: '',
-      user: '',
-    });
-    this.form.clearValidators();
+    this.resetForm();
   }
 
   public onDelete(id: string) {
@@ -97,14 +88,27 @@ export class CashFlowContainerComponent implements OnInit {
       return;
     }
     this.transactionId = undefined;
+    this.isEditMode = false;
     this.store.dispatch(
       createTransaction({
         transaction: Object.assign({}, this.form.value, { createdAt: new Date() }),
       }),
     );
+    this.resetForm();
   }
 
   public onLogout() {
     this.store.dispatch(logout());
+  }
+
+  protected resetForm() {
+    this.form.patchValue({
+      description: '',
+      amount: '',
+      category: '',
+      type: '',
+      user: '',
+    });
+    this.form.clearValidators();
   }
 }
