@@ -48,6 +48,7 @@
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.1",
     "@types/jasmine": "~4.0.0",
+    "@types/jasminewd2": "^2.0.13",
     "@types/jest": "^29.5.13",
     "@types/normalize-package-data": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "5.43.0",
