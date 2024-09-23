@@ -30,8 +30,8 @@ export class TableComponent {
     return `${prefix}${formatMoney(String(row.amount))}`;
   }
 
-  public onEdit(id: string) {
-    this.edit$.emit(id);
+  public onEdit(transaction: any) {
+    this.edit$.emit(transaction);
   }
 
   public onDelete(id: string) {

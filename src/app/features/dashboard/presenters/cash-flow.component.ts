@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TransactionType } from '../models/transaction-types.enum';
@@ -16,17 +16,21 @@ export class CashFlowPresenterComponent {
   @Input() form!: FormGroup;
   @Input() transactions!: Transaction[] | null;
   @Input() categoriesOptions!: CategoryOption[];
+  @Input() isEditMode!: boolean;
 
   @Output() delete$ = new EventEmitter();
   @Output() edit$ = new EventEmitter();
   @Output() create$ = new EventEmitter();
   @Output() logout$ = new EventEmitter();
+  @Output() cancel$ = new EventEmitter();
 
   transactionForm!: FormGroup;
   transactionTypes = TransactionType;
 
-  columns = ['user', 'description', 'type', 'amount', 'category', 'createdAt', 'actions'];
+  columns = ['description', 'type', 'amount', 'category', 'createdAt', 'actions'];
   analysis!: Analysis;
+
+  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
 
   get total() {
     const total = this.transactions?.reduce((acc, transaction) => {
@@ -61,11 +65,12 @@ export class CashFlowPresenterComponent {
 
   public onCancel(): void {
     this.modal.closeAll();
+    this.cancel$.emit();
   }
 
   public onSubmit(): void {
     if (this.form.valid) {
-      this.onCancel();
+      this.modal.closeAll();
       this.create$.emit();
     }
   }
@@ -74,8 +79,9 @@ export class CashFlowPresenterComponent {
     this.delete$.emit(id);
   }
 
-  public onEdit(id: string) {
-    this.edit$.emit(id);
+  public onEdit(transaction: Transaction) {
+    this.edit$.emit(transaction);
+    this.openModal(this.dialogTemplate);
   }
 
   public onLogout() {

@@ -38,7 +38,9 @@
 
 <!-- Modal -->
 <ng-template #dialogTemplate>
-  <h1 mat-dialog-title>Adicionar transação</h1>
+  <h1 mat-dialog-title>
+    {{ isEditMode ? 'Atualizar transação' : 'Adicionar transação' }}
+  </h1>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">
       <mat-form-field appearance="outline" class="w-full">
@@ -89,9 +91,9 @@
     </div>
 
     <div class="actions">
-      <button mat-flat-button (click)="onCancel()">Cancelar</button>
+      <button type="button" mat-flat-button (click)="onCancel()">Cancelar</button>
       <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
-        Adicionar transação
+        {{ isEditMode ? 'Atualizar transação' : 'Adicionar transação' }}
       </button>
     </div>
   </form>

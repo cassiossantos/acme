@@ -5,6 +5,7 @@ import {
   loadTransactions,
   loadTransactionsFailure,
   loadTransactionsSuccess,
+  updateTransactionSuccess,
 } from './transaction.actions';
 
 export const transactionReducer = createReducer(

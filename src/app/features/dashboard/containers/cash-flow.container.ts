@@ -9,6 +9,7 @@ import {
   loadTransactions,
   logout,
   selectTransactions,
+  updateTransaction,
 } from '../store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryOption, generateCategoryList } from '../models/categories.map';
@@ -19,10 +20,12 @@ import { CategoryOption, generateCategoryList } from '../models/categories.map';
     [transactions]="transactions$ | async"
     [form]="form"
     [categoriesOptions]="categories"
+    [isEditMode]="isEditMode"
     (edit$)="onEdit($event)"
     (delete$)="onDelete($event)"
     (create$)="onCreate()"
     (logout$)="onLogout()"
+    (cancel$)="onCancel()"
   ></acme-cash-flow-presenter>`,
 })
 export class CashFlowContainerComponent implements OnInit {
@@ -30,6 +33,8 @@ export class CashFlowContainerComponent implements OnInit {
   user!: User;
   transactions$!: Observable<Transaction[]>;
   categories!: CategoryOption[];
+  isEditMode = false;
+  transactionId!: string | undefined;
 
   constructor(
     private store: Store,
@@ -50,8 +55,30 @@ export class CashFlowContainerComponent implements OnInit {
     this.transactions$ = this.store.select(selectTransactions);
   }
 
-  public onEdit(id: string) {
-    console.log('edit', id);
+  public onEdit(transaction: Transaction) {
+    this.isEditMode = true;
+    this.transactionId = transaction.id;
+    this.form.patchValue({
+      description: transaction.description,
+      amount: transaction.amount,
+      category: transaction.category,
+      type: transaction.type,
+      user: transaction.user,
+    });
+
+    console.log(transaction, this.transactionId);
+  }
+  public onCancel() {
+    this.isEditMode = false;
+    this.transactionId = undefined;
+    this.form.patchValue({
+      description: '',
+      amount: '',
+      category: '',
+      type: '',
+      user: '',
+    });
+    this.form.clearValidators();
   }
 
   public onDelete(id: string) {
@@ -59,6 +86,17 @@ export class CashFlowContainerComponent implements OnInit {
   }
 
   public onCreate() {
+    if (this.transactionId) {
+      this.store.dispatch(
+        updateTransaction({
+          transaction: Object.assign({}, this.form.value, {
+            id: this.transactionId,
+          }),
+        }),
+      );
+      return;
+    }
+    this.transactionId = undefined;
     this.store.dispatch(
       createTransaction({
         transaction: Object.assign({}, this.form.value, { createdAt: new Date() }),

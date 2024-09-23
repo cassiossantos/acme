@@ -46,3 +46,18 @@ export const createTransactionFailure = createAction(
 export const logout = createAction('[Auth] Logout');
 export const logoutSuccess = createAction('[Auth] Logout Success');
 export const logoutFailure = createAction('[Auth] Logout Failure', (error: any) => ({ error }));
+
+export const updateTransaction = createAction(
+  '[Transaction] Update Transaction',
+  props<{ transaction: Transaction }>(),
+);
+
+export const updateTransactionSuccess = createAction(
+  '[Transaction] Update Transaction Success',
+  props<{ transaction: Transaction }>(),
+);
+
+export const updateTransactionFailure = createAction(
+  '[Transaction] Update Transaction Failure',
+  props<{ error: any }>(),
+);

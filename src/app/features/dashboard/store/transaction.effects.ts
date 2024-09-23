@@ -14,6 +14,9 @@ import {
   logout,
   logoutFailure,
   logoutSuccess,
+  updateTransaction,
+  updateTransactionFailure,
+  updateTransactionSuccess,
 } from './transaction.actions';
 import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
@@ -31,7 +34,7 @@ export class TransactionEffects {
 
   loadTransactions$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(loadTransactions, createTransactionSuccess),
+      ofType(loadTransactions, createTransactionSuccess, updateTransactionSuccess),
       mergeMap(() => {
         return this.transactionService.getTransactions().pipe(
           map((transactions: Transaction[]) => loadTransactionsSuccess({ transactions })),
@@ -60,6 +63,18 @@ export class TransactionEffects {
         return this.transactionService.createTransaction(transaction).pipe(
           map(() => createTransactionSuccess({ transaction })),
           catchError((error) => of(createTransactionFailure({ error }))),
+        );
+      }),
+    );
+  });
+
+  updateTransaction$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateTransaction),
+      mergeMap(({ transaction }) => {
+        return this.transactionService.updateTransaction(transaction).pipe(
+          map(() => updateTransactionSuccess({ transaction })),
+          catchError((error) => of(updateTransactionFailure({ error }))),
         );
       }),
     );

@@ -13,7 +13,7 @@ export class TransactionService {
 
   getTransactions(): Observable<Transaction[]> {
     return this.firestore
-      .collection<Transaction>(this.collectionName)
+      .collection<Transaction>(this.collectionName, (ref) => ref.orderBy('createdAt', 'desc'))
       .get()
       .pipe(
         map((snapshot) =>
@@ -47,6 +47,24 @@ export class TransactionService {
       this.firestore
         .collection(this.collectionName)
         .add(transaction)
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  updateTransaction(transaction: Transaction): Observable<void> {
+    const mutable = Object.assign({}, transaction);
+    delete mutable.id;
+    return new Observable((observer) => {
+      this.firestore
+        .collection(this.collectionName)
+        .doc(transaction.id)
+        .update(mutable)
         .then(() => {
           observer.next();
           observer.complete();
