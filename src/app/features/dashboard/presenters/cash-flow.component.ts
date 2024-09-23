@@ -5,6 +5,7 @@ import { TransactionType } from '../models/transaction-types.enum';
 import { Transaction } from '../models/transaction.model';
 import { Analysis } from '../models/analysis.model';
 import { CategoryOption } from '../models/categories.map';
+import { formatMoney } from '../../../shared/currency-mask.directive';
 
 @Component({
   selector: 'acme-cash-flow-presenter',
@@ -26,6 +27,30 @@ export class CashFlowPresenterComponent {
 
   columns = ['user', 'description', 'type', 'amount', 'category', 'createdAt', 'actions'];
   analysis!: Analysis;
+
+  get total() {
+    const total = this.transactions?.reduce((acc, transaction) => {
+      return transaction.type === TransactionType.INBOUND
+        ? acc + transaction.amount
+        : acc - transaction.amount;
+    }, 0);
+
+    return formatMoney(String(total));
+  }
+
+  get inboundTotal() {
+    const inbound = this.transactions
+      ?.filter((transaction) => transaction.type === TransactionType.INBOUND)
+      .reduce((acc, transaction) => acc + transaction.amount, 0);
+    return formatMoney(String(inbound));
+  }
+
+  get outboundTotal() {
+    const outbound = this.transactions
+      ?.filter((transaction) => transaction.type === TransactionType.OUTBOUND)
+      .reduce((acc, transaction) => acc + transaction.amount, 0);
+    return formatMoney(String(outbound));
+  }
 
   constructor(private modal: MatDialog) {}
 

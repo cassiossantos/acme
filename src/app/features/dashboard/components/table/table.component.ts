@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Transaction } from '../../models/transaction.model';
 import { TransactionMap } from '../../models/transaction-types.map';
 import { CategoryMap } from '../../models/categories.map';
+import { formatMoney } from '../../../../shared/currency-mask.directive';
+import { TransactionType } from '../../models/transaction-types.enum';
 
 @Component({
   selector: 'acme-table',
@@ -21,6 +23,11 @@ export class TableComponent {
 
   public getCategory(category: keyof typeof CategoryMap): string {
     return CategoryMap[category] || '-';
+  }
+
+  public getAmount(row: Transaction): string {
+    const prefix = row.type === TransactionType.INBOUND ? '+' : '-';
+    return `${prefix}${formatMoney(String(row.amount))}`;
   }
 
   public onEdit(id: string) {

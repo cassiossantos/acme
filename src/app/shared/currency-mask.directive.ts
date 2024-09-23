@@ -15,14 +15,18 @@ export class CurrencyMaskDirective {
   }
 
   private formatCurrency(value: string): string {
-    if (!value) return '';
-
-    const intValue = parseInt(value, 10);
-    const formatter = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-
-    return formatter.format(intValue / 100);
+    return formatMoney(value);
   }
+}
+
+export function formatMoney(value: string) {
+  if (!value) return '';
+
+  const intValue = parseInt(value, 10);
+  const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  });
+
+  return formatter.format(intValue);
 }

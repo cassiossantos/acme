@@ -2,9 +2,9 @@
 
 <main class="cash-flow">
   <section class="cash-flow__analysis">
-    <acme-card title="Entrada" amount="R$ 20,00" color="success"></acme-card>
-    <acme-card title="Saída" amount="R$ -20,00" color="failure"></acme-card>
-    <acme-card title="Total" amount="R$ 20,00"></acme-card>
+    <acme-card title="Entrada" [amount]="inboundTotal" color="success"></acme-card>
+    <acme-card title="Saída" [amount]="outboundTotal" color="failure"></acme-card>
+    <acme-card title="Total" [amount]="total"></acme-card>
   </section>
 
   <section class="cash-flow__data">
