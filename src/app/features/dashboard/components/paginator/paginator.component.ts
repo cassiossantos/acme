@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'acme-paginator',
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss'],
 })
-export class PaginatorComponent implements OnInit {
+export class PaginatorComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }
