@@ -30,14 +30,14 @@ export class SigninContainerComponent implements OnInit {
     this.accounts$ = this.store.select(selectAccounts);
   }
 
-  protected setForm() {
+  public setForm() {
     this.form = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.min(6)]],
     });
   }
 
-  protected onSubmit() {
+  public onSubmit() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
       this.store.dispatch(login({ user: { email, password } }));
