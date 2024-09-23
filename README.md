@@ -1,6 +1,6 @@
 # Acme Cash Flow App
 
-A simple demo application for managing cash flow, featuring login, dashboard, and profile edit functionalities.
+Acme Cash Flow App is a demo application designed to manage cash flow efficiently. Built with Angular 14 and NgRx for state management, it features user authentication, a dashboard for monitoring financial data, and an intuitive transaction editing interface. This app showcases best practices in modern web development, including conventional commits and Git hooks with Husky.
 
 ## Features
 
