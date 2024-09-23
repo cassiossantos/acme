@@ -1,9 +1,8 @@
 <mat-card class="card">
   <mat-card-title-group>
-    <mat-card-title> Entrada </mat-card-title>
-    <mat-icon>arrow</mat-icon>
+    <mat-card-title> {{ title }} </mat-card-title>
   </mat-card-title-group>
   <mat-card-content>
-    <span class="failure">R$ -200,00</span>
+    <span [ngClass]="color">{{ amount }}</span>
   </mat-card-content>
 </mat-card>

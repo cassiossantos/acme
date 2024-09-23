@@ -1,0 +1,15 @@
+export enum Category {
+  Salary = 'salary',
+  BusinessIncome = 'business_income',
+  InvestmentReturns = 'investment_returns',
+  Gifts = 'gifts',
+  RentalIncome = 'rental_income',
+  Rent = 'rent',
+  Utilities = 'utilities',
+  Groceries = 'groceries',
+  Transportation = 'transportation',
+  Entertainment = 'entertainment',
+  HealthCare = 'healthcare',
+  Education = 'education',
+  Miscellaneous = 'miscellaneous',
+}

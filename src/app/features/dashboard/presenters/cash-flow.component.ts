@@ -1,38 +1,37 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { TransactionType } from '../models/transaction-types.enum';
+import { Transaction } from '../models/transaction.model';
+import { Analysis } from '../models/analysis.model';
+import { CategoryOption } from '../models/categories.map';
 
-export enum TransactionType {
-  INBOUND = 'inbound',
-  OUTBOUND = 'outbound',
-}
 @Component({
   selector: 'acme-cash-flow-presenter',
   templateUrl: './cash-flow.component.html',
   styleUrls: ['./cash-flow.component.scss'],
 })
 export class CashFlowPresenterComponent {
+  @Input() form!: FormGroup;
+  @Input() transactions!: Transaction[] | null;
+  @Input() categoriesOptions!: CategoryOption[];
+
+  @Output() delete$ = new EventEmitter();
+  @Output() edit$ = new EventEmitter();
+  @Output() create$ = new EventEmitter();
+  @Output() logout$ = new EventEmitter();
+
   transactionForm!: FormGroup;
   transactionTypes = TransactionType;
 
-  constructor(
-    private modal: MatDialog,
-    private fb: FormBuilder,
-  ) {
-    this.transactionForm = this.fb.group({
-      description: ['', Validators.required],
-      value: ['', [Validators.required, Validators.min(0)]],
-      category: ['', Validators.required],
-      type: ['', Validators.required], // Campo para o tipo de transação
-    });
-  }
+  columns = ['user', 'description', 'type', 'amount', 'category', 'createdAt', 'actions'];
+  analysis!: Analysis;
+
+  constructor(private modal: MatDialog) {}
 
   public openModal(dialogTemplate: any) {
     const dialogRef = this.modal.open(dialogTemplate, {});
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('Form data:', result);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   public onCancel(): void {
@@ -40,10 +39,21 @@ export class CashFlowPresenterComponent {
   }
 
   public onSubmit(): void {
-    if (this.transactionForm.valid) {
-      const transactionData = this.transactionForm.value;
-      console.log('Transação adicionada:', transactionData);
+    if (this.form.valid) {
       this.onCancel();
+      this.create$.emit();
     }
+  }
+
+  public onDelete(id: string) {
+    this.delete$.emit(id);
+  }
+
+  public onEdit(id: string) {
+    this.edit$.emit(id);
+  }
+
+  public onLogout() {
+    this.logout$.emit();
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'acme-topbar',
@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent {
-  constructor() {}
+  @Output() logout$ = new EventEmitter();
+
+  public onLogout() {
+    this.logout$.emit();
+  }
 }

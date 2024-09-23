@@ -12,6 +12,7 @@ import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { AccountService } from '../services/account.service';
 import { Account } from '../models/auth.model';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -19,6 +20,7 @@ export class AuthEffects {
     private actions$: Actions,
     private accountService: AccountService,
     private authService: AuthService,
+    private router: Router,
   ) {}
 
   loadAccounts$ = createEffect(() => {
@@ -44,4 +46,16 @@ export class AuthEffects {
       }),
     );
   });
+
+  loginSuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(loginSuccess),
+        tap(() => {
+          return this.router.navigate(['/']);
+        }),
+      );
+    },
+    { dispatch: false },
+  );
 }

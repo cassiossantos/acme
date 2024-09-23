@@ -1,10 +1,10 @@
-<acme-topbar></acme-topbar>
+<acme-topbar (logout$)="onLogout()"></acme-topbar>
 
 <main class="cash-flow">
   <section class="cash-flow__analysis">
-    <acme-card></acme-card>
-    <acme-card></acme-card>
-    <acme-card></acme-card>
+    <acme-card title="Entrada" amount="R$ 20,00" color="success"></acme-card>
+    <acme-card title="Saída" amount="R$ -20,00" color="failure"></acme-card>
+    <acme-card title="Total" amount="R$ 20,00"></acme-card>
   </section>
 
   <section class="cash-flow__data">
@@ -15,15 +15,22 @@
           <button (click)="openModal(dialogTemplate)" mat-flat-button color="primary">
             Adicionar
           </button>
-          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+          <!-- <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
             <mat-icon>refresh</mat-icon>
-          </button>
+          </button> -->
         </div>
       </mat-card-title>
 
       <mat-card-content>
-        <acme-table></acme-table>
-        <acme-paginator></acme-paginator>
+        <ng-container *ngIf="transactions">
+          <acme-table
+            [rows]="transactions"
+            [columns]="columns"
+            (delete$)="onDelete($event)"
+            (edit$)="onEdit($event)"
+          ></acme-table>
+        </ng-container>
+        <!-- TODO: <acme-paginator></acme-paginator> -->
       </mat-card-content>
     </mat-card>
   </section>
@@ -32,76 +39,58 @@
 <!-- Modal -->
 <ng-template #dialogTemplate>
   <h1 mat-dialog-title>Adicionar transação</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Descrição</mat-label>
+        <input
+          matInput
+          placeholder="Descrição da transação"
+          maxlength="40"
+          formControlName="description"
+        />
 
-  <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Descrição</mat-label>
-      <input
-        matInput
-        placeholder="Descrição da transação"
-        maxlength="40"
-        formControlName="description"
-      />
+        <mat-hint align="end">{{ form.get('description')?.value.length || 0 }}/40</mat-hint>
 
-      <mat-hint align="end"
-        >{{ transactionForm.get('description')?.value.length || 0 }}/40</mat-hint
-      >
+        <mat-error *ngIf="form.get('description')?.invalid && form.get('description')?.touched">
+          A descrição é obrigatória
+        </mat-error>
+      </mat-form-field>
 
-      <mat-error
-        *ngIf="
-          transactionForm.get('description')?.invalid && transactionForm.get('description')?.touched
-        "
-      >
-        A descrição é obrigatória
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type">
+          <mat-option [value]="transactionTypes.INBOUND">Entrada</mat-option>
+          <mat-option [value]="transactionTypes.OUTBOUND">Saída</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('type')?.invalid && form.get('type')?.touched">
+          O tipo é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Tipo</mat-label>
-      <mat-select formControlName="type">
-        <mat-option [value]="transactionTypes.INBOUND">Entrada</mat-option>
-        <mat-option [value]="transactionTypes.OUTBOUND">Saída</mat-option>
-      </mat-select>
-      <mat-error
-        *ngIf="transactionForm.get('type')?.invalid && transactionForm.get('type')?.touched"
-      >
-        O tipo é obrigatório
-      </mat-error>
-    </mat-form-field>
+    <div class="row">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Valor</mat-label>
+        <input matInput type="number" placeholder="Valor da transação" formControlName="amount" />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Valor</mat-label>
-      <input
-        matInput
-        acmeCurrencyMask
-        maxlength="20"
-        type="text"
-        placeholder="Valor da transação"
-        formControlName="value"
-      />
-      <mat-error
-        *ngIf="transactionForm.get('value')?.invalid && transactionForm.get('value')?.touched"
-      >
-        Insira um valor válido
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Categoria</mat-label>
-      <mat-select formControlName="category">
-        <mat-option value="sell">Vendas</mat-option>
-        <mat-option value="buy">Compras</mat-option>
-      </mat-select>
-      <mat-error
-        *ngIf="transactionForm.get('category')?.invalid && transactionForm.get('category')?.touched"
-      >
-        A categoria é obrigatória
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let option of categoriesOptions" [value]="option.slug">
+            {{ option.value }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('category')?.invalid && form.get('category')?.touched">
+          A categoria é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
 
     <div class="actions">
-      <button mat-button (click)="onCancel()">Cancelar</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="transactionForm.invalid">
+      <button mat-flat-button (click)="onCancel()">Cancelar</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
         Adicionar transação
       </button>
     </div>

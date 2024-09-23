@@ -1,5 +1,6 @@
 table {
   width: 100%;
+  min-width: 800px;
 }
 
 th.mat-sort-header-sorted {
@@ -26,4 +27,12 @@ th.mat-sort-header-sorted {
       flex-direction: row;
     }
   }
+}
+
+.outbound {
+  color: #dd2f41;
+}
+
+.inbound {
+  color: #46a35e;
 }

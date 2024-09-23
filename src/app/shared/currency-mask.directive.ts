@@ -9,7 +9,7 @@ export class CurrencyMaskDirective {
   @HostListener('input', ['$event'])
   onInput(event: Event) {
     const input = this.el.nativeElement;
-    const value = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    const value = input.value.replace(/\D/g, '');
     const formattedValue = this.formatCurrency(value);
     input.value = formattedValue;
   }

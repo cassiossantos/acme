@@ -48,12 +48,18 @@
 
     .mat-card {
       width: 100%;
+      min-height: 380px;
+      box-sizing: border-box;
     }
 
     .mat-card-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .mat-card-content {
+      overflow: auto;
     }
 
     .mat-title {
@@ -72,4 +78,14 @@
     height: 100vh;
     box-sizing: border-box;
   }
+}
+
+.actions {
+  display: flex;
+  justify-content: end;
+  gap: 16px;
+}
+
+.mat-flat-button {
+  padding: 4px 20px;
 }
